@@ -2,6 +2,7 @@ import type { Property } from '../types/property'
 
 interface PropertyCardProps {
   property: Property
+  onSelect: (property: Property) => void
 }
 
 const currency = new Intl.NumberFormat('pt-BR', {
@@ -10,7 +11,7 @@ const currency = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
 })
 
-export function PropertyCard({ property }: PropertyCardProps) {
+export function PropertyCard({ property, onSelect }: PropertyCardProps) {
   const priceSuffix = property.purpose === 'alugar' ? '/mês' : ''
 
   return (
@@ -36,7 +37,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           {property.parkingSpaces > 0 && <li>{property.parkingSpaces} vaga(s)</li>}
           <li>{property.areaM2} m²</li>
         </ul>
-        <button type="button" className="property-link">
+        <button type="button" className="property-link" onClick={() => onSelect(property)}>
           Ver detalhes
         </button>
       </div>
