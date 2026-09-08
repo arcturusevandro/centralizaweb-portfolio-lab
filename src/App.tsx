@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react'
 import { PropertyCard } from './components/PropertyCard'
+import { PropertyDetails } from './components/PropertyDetails'
 import { properties } from './data/properties'
-import type { PropertyPurpose, PropertyType } from './types/property'
+import type { Property, PropertyPurpose, PropertyType } from './types/property'
 
 export default function App() {
   const [purpose, setPurpose] = useState<PropertyPurpose>('comprar')
   const [location, setLocation] = useState('')
   const [type, setType] = useState<PropertyType | 'todos'>('todos')
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
 
   const filteredProperties = useMemo(() => {
     const normalizedLocation = location.trim().toLocaleLowerCase('pt-BR')
@@ -23,7 +25,22 @@ export default function App() {
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setSelectedProperty(null)
     document.querySelector('#imoveis')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  function handleSelectProperty(property: Property) {
+    setSelectedProperty(property)
+    window.setTimeout(() => {
+      document.querySelector('#detalhes')?.scrollIntoView({ behavior: 'smooth' })
+    }, 0)
+  }
+
+  function handleCloseDetails() {
+    setSelectedProperty(null)
+    window.setTimeout(() => {
+      document.querySelector('#imoveis')?.scrollIntoView({ behavior: 'smooth' })
+    }, 0)
   }
 
   return (
@@ -95,7 +112,7 @@ export default function App() {
           {filteredProperties.length > 0 ? (
             <div className="property-grid">
               {filteredProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
+                <PropertyCard key={property.id} property={property} onSelect={handleSelectProperty} />
               ))}
             </div>
           ) : (
@@ -116,6 +133,12 @@ export default function App() {
         </div>
       </section>
 
+      {selectedProperty && (
+        <div id="detalhes">
+          <PropertyDetails property={selectedProperty} onClose={handleCloseDetails} />
+        </div>
+      )}
+
       <section className="intro" id="sobre">
         <div className="container intro-grid">
           <div>
@@ -124,8 +147,8 @@ export default function App() {
           </div>
           <p>
             Esta iteração valida catálogo tipado, filtros por objetivo, localização e tipo de imóvel,
-            além de um estado vazio compreensível. Os imóveis e valores são fictícios e existem apenas
-            para demonstrar a experiência de navegação.
+            estado vazio e ficha individual. Os imóveis e valores são fictícios e existem apenas para
+            demonstrar a experiência de navegação.
           </p>
         </div>
       </section>
