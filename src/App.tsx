@@ -47,7 +47,7 @@ export default function App() {
     <main>
       <header className="site-header">
         <div className="container header-inner">
-          <div className="brand">Horizonte Imóveis</div>
+          <div className="brand">CentralizaWeb — Imobiliária</div>
           <nav aria-label="Navegação principal">
             <a href="#imoveis">Imóveis</a>
             <a href="#anunciar">Anuncie seu imóvel</a>
@@ -165,8 +165,8 @@ export default function App() {
 
       <footer>
         <div className="container footer-inner">
-          <strong>Horizonte Imóveis</strong>
-          <span>Projeto fictício desenvolvido pela CentralizaWeb para fins demonstrativos.</span>
+          <strong>CentralizaWeb — Imobiliária</strong>
+          <span>Projeto conceito desenvolvido pela CentralizaWeb para fins demonstrativos.</span>
         </div>
       </footer>
     </main>
